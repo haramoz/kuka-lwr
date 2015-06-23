@@ -50,6 +50,9 @@ link_directories(${GAZEBO_LIBRARY_DIRS})
 add_library(lwr_hw
   src/lwr_hw.cpp
 )
+target_link_libraries(lwr_hw
+  ${catkin_LIBRARIES}
+)
 
 ## REAL 
 ## lwr hw real library
@@ -87,33 +90,33 @@ target_link_libraries(lwr_hw_node
 #)
 
 ## lwr hw sim default behavior
-add_library(default_lwr_hw_sim 
-  src/default_lwr_hw_sim.cpp
-)
+#add_library(default_lwr_hw_sim 
+#  src/default_lwr_hw_sim.cpp
+#)
 # add_dependencies(default_lwr_hw_sim
 #  lwr_hw_sim
 #)
-target_link_libraries(default_lwr_hw_sim
+#target_link_libraries(default_lwr_hw_sim
 #  lwr_hw_sim
-  lwr_hw # this is needed because there is no lwr_hw_sim library
-  ${catkin_LIBRARIES} 
-  ${GAZEBO_LIBRARIES}
-)
+#  lwr_hw # this is needed because there is no lwr_hw_sim library
+#  ${catkin_LIBRARIES} 
+#  ${GAZEBO_LIBRARIES}
+#)
 
 # lwr hw sim gazebo plugin
-add_library(lwr_hw_sim_plugin
-  src/lwr_hw_sim_plugin.cpp
-)
-target_link_libraries(lwr_hw_sim_plugin
-  ${catkin_LIBRARIES}
-  ${GAZEBO_LIBRARIES}
-)
+#add_library(lwr_hw_sim_plugin
+#  src/lwr_hw_sim_plugin.cpp
+#)
+#target_link_libraries(lwr_hw_sim_plugin
+#  ${catkin_LIBRARIES}
+#  ${GAZEBO_LIBRARIES}
+#)
 
 ## Install
-install(TARGETS default_lwr_hw_sim
-  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  )
+#install(TARGETS default_lwr_hw_sim
+#  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#  )
 
-install(FILES lwr_hw_sim_plugins.xml
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-  )
+#install(FILES lwr_hw_sim_plugins.xml
+#  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+#  )
