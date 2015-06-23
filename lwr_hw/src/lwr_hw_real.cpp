@@ -140,6 +140,11 @@ bool LWRHWreal::start()
   device_->doDataExchange();
   ROS_INFO("Done handshake !");
 
+  for (int j = 0; j < LBR_MNJ; j++)
+  {
+    joint_position_[j] = device_->getMsrMsrJntPosition()[j];
+	joint_position_command_[j] = joint_position_[j];
+  }
   return true;
 }
 
