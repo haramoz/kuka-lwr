@@ -200,17 +200,17 @@ void LWRHWreal::write(ros::Time time, ros::Duration period)
       {
         for (int i = 0; i < LBR_MNJ; i++)
         {
-            newJntPosition[i] = joint_position_command_[i]; // zero for now
+//            newJntPosition[i] = joint_position_command_[i]; // zero for now
             newJntAddTorque[i] = joint_effort_command_[i]; // comes from the controllers
-            newJntStiff[i] = joint_stiffness_command_[i]; // default values for now
-            newJntDamp[i] = joint_damping_command_[i]; // default values for now
+//            newJntStiff[i] = joint_stiffness_command_[i]; // default values for now
+//            newJntDamp[i] = joint_damping_command_[i]; // default values for now
         }
 
         // only joint impedance control is performed, since it is the only one that provide access to the joint torque directly
         // note that stiffness and damping are 0, as well as the position, since only effort is allowed to be sent
         // the KRC adds the dynamic terms, such that if zero torque is sent, the robot apply torques necessary to mantain the robot in the current position
         // the only interface is effort, thus any other action you want to do, you have to compute the added torque and send it through a controller
-        device_->doJntImpedanceControl(newJntPosition, newJntStiff, newJntDamp, newJntAddTorque, true);
+        device_->doJntImpedanceControl(NULL, NULL, NULL, newJntAddTorque, true);
       } 
       else if( device_->getCurrentControlScheme() == FRI_CTRL_POSITION )
       {
