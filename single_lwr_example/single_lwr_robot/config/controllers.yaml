@@ -17,15 +17,23 @@ lwr:
       - lwr_6_joint
 
   stiffness_trajectory_controller:
-    type: position_controllers/JointTrajectoryController
+    type: effort_controllers/JointTrajectoryController
     joints:
-      - lwr_0_joint_stiffness
-      - lwr_1_joint_stiffness
-      - lwr_2_joint_stiffness
-      - lwr_3_joint_stiffness
-      - lwr_4_joint_stiffness
-      - lwr_5_joint_stiffness
-      - lwr_6_joint_stiffness
+      - lwr_0_joint
+      - lwr_1_joint
+      - lwr_2_joint
+      - lwr_3_joint
+      - lwr_4_joint
+      - lwr_5_joint
+      - lwr_6_joint
+    gains:
+      lwr_0_joint: {p: 400,  i: 10, d: 30, i_clamp: 0.3}
+      lwr_1_joint: {p: 300,  i: 10, d: 30, i_clamp: 0.3}
+      lwr_2_joint: {p: 250,  i: 6, d: 20, i_clamp: 0.3}
+      lwr_3_joint: {p: 250,  i: 5, d: 12, i_clamp: 0.3}
+      lwr_4_joint: {p: 150,  i: 5, d: 10, i_clamp: 0.3}
+      lwr_5_joint: {p: 80,  i: 5, d: 7, i_clamp: 0.3}
+      lwr_6_joint: {p: 25,  i: 2, d: 5, i_clamp: 0.3}
 
 ## OTHER CUSTOM CONTROLLERS LEFT HERE AS EXAMPLES
   #   Joint Impedance Controllers

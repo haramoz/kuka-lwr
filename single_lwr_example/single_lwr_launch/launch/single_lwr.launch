@@ -5,17 +5,17 @@
 	<arg name="robot_name" default="single_lwr_robot"/>
 
 	<!-- the default is the simulator -->
-	<arg name="use_lwr_sim" default="true"/>
+	<arg name="use_lwr_sim" default="false"/>
 	
 	<!-- set the parameters for the real interface -->
-	<arg name="lwr_powered" default="false"/>
+	<arg name="lwr_powered" default="true"/>
 	<arg name="port" default="49939"/>
 	<arg name="ip" default="192.168.0.20"/>
     <arg name="t1_limits" default="false"/>
-    <arg name="controllers" default="joint_trajectory_controller stiffness_trajectory_controller"/>
+    <arg name="controllers" default="stiffness_trajectory_controller"/>
 
 	<!-- in case you want to load moveit from here, it might be hard with the real HW though -->
-	<arg name="load_moveit" default="false"/>
+	<arg name="load_moveit" default="true"/>
 
 	<!-- this must be in accordance to the hardware interface in the model, there should be a xacro parameter to facilitate that to users -->
 	<!-- arg name="controller" default="joint_position_trajectory_controller"/-->
