@@ -43,7 +43,7 @@ catkin_package(
     std_msgs
   INCLUDE_DIRS include
   LIBRARIES ${PROJECT_NAME} lwr_hw_gazebo_plugin friremote frilremote
-  DEPENDS gazebo
+  #DEPENDS gazebo
 )
 
 ###########
@@ -98,7 +98,7 @@ ExternalProject_Add(FRILibrary
 
 # lwr hw fril node
 include_directories(${CATKIN_DEVEL_PREFIX}/include/fril)
-link_directories(${CATKIN_DEVEL_PREFIX}/lib)
+#link_directories(${CATKIN_DEVEL_PREFIX}/lib)
 add_executable(lwr_hw_fril_node  src/lwr_hw_fril_node.cpp
   include/${PROJECT_NAME}/lwr_hw_fril.hpp
 )
