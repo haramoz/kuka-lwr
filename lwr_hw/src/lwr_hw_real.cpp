@@ -200,10 +200,10 @@ void LWRHWreal::write(ros::Time time, ros::Duration period)
       {
         for (int i = 0; i < LBR_MNJ; i++)
         {
-//            newJntPosition[i] = joint_position_command_[i]; // zero for now
+            newJntPosition[i] = joint_position_command_[i]; // zero for now
             newJntAddTorque[i] = joint_effort_command_[i]; // comes from the controllers
-//            newJntStiff[i] = joint_stiffness_command_[i]; // default values for now
-//            newJntDamp[i] = joint_damping_command_[i]; // default values for now
+            newJntStiff[i] = joint_stiffness_command_[i]; // default values for now
+            newJntDamp[i] = joint_damping_command_[i]; // default values for now
         }
 
         // only joint impedance control is performed, since it is the only one that provide access to the joint torque directly

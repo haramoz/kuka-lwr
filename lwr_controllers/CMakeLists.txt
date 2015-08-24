@@ -13,6 +13,8 @@ find_package(catkin REQUIRED COMPONENTS
   kdl_parser
   message_generation
   cmake_modules
+  geometry_msgs
+  std_msgs
 )
 
 include_directories(include ${orocos_kdl_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
@@ -48,6 +50,8 @@ catkin_package(
     forward_command_controller
     kdl_parser
     message_runtime
+    geometry_msgs
+    std_msgs
   INCLUDE_DIRS include
   LIBRARIES ${PROJECT_NAME}
   )
