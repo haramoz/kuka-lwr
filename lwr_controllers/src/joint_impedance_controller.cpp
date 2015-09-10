@@ -66,17 +66,20 @@ void JointImpedanceController::starting(const ros::Time& time)
     dotq_msr_.q(i) = joint_handles_[i].getPosition();
     q_des_(i) = dotq_msr_.q(i);
     dotq_msr_.qdot(i) = joint_handles_[i].getVelocity();
+    ROS_ERROR("messured position %f",dotq_msr_.q(i));
+    //ROS_ERROR("messured velocity %f",joint_handles_[i].getVelocity());
     }
-
-
+    ROS_INFO("Inside the STARTING method joint joint_impedance_controller");
 }
 
 void JointImpedanceController::update(const ros::Time& time, const ros::Duration& period)
 {
+    //ROS_INFO("Inside the UPDATE method joint joint_impedance_controller");
 
   // get joint positions	
   for(size_t i=0; i<joint_handles_.size(); i++) {
     dotq_msr_.q(i) = joint_handles_[i].getPosition();
+    //ROS_ERROR("messured position %f",dotq_msr_.q(i));
     q_msr_(i) = dotq_msr_.q(i);
     dotq_msr_.qdot(i) = joint_handles_[i].getVelocity();
     }
@@ -85,6 +88,7 @@ void JointImpedanceController::update(const ros::Time& time, const ros::Duration
   id_solver_gravity_->JntToGravity( q_msr_ , tau_gravity_ );
   for(size_t i=0; i<joint_handles_.size(); i++) {
     tau_cmd_(i) = K_(i) * (q_des_(i) - q_msr_(i)) + D_(i)*dotq_msr_.qdot(i) + tau_des_(i) + tau_gravity_(i);
+    //ROS_ERROR("calculated tau command %f",tau_cmd_ (i));
     joint_handles_[i].setCommand(tau_cmd_	(i));
     }	
 
@@ -92,11 +96,13 @@ void JointImpedanceController::update(const ros::Time& time, const ros::Duration
 
 
 void JointImpedanceController::command(const std_msgs::Float64MultiArray::ConstPtr &msg){
+  ROS_INFO("Inside the COMMAND method joint joint_impedance_controller");
+
   if (msg->data.size() == 0) {
     ROS_INFO("Desired configuration must be: %lu dimension", joint_handles_.size());
     }
   else if ((int)msg->data.size() != joint_handles_.size()) {
-    ROS_ERROR("Posture message had the wrong size: %d", (int)msg->data.size());
+    ROS_ERROR("Posture message had the wrong size: %f", (int)msg->data.size());
     return;
     }
   else

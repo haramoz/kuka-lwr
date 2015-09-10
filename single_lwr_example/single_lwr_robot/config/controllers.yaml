@@ -19,13 +19,13 @@ lwr:
   stiffness_trajectory_controller:
     type: position_controllers/JointTrajectoryController
     joints:
-      - lwr_0_joint_stiffness
-      - lwr_1_joint_stiffness
-      - lwr_2_joint_stiffness
-      - lwr_3_joint_stiffness
-      - lwr_4_joint_stiffness
-      - lwr_5_joint_stiffness
-      - lwr_6_joint_stiffness
+      - lwr_0_joint
+      - lwr_1_joint
+      - lwr_2_joint
+      - lwr_3_joint
+      - lwr_4_joint
+      - lwr_5_joint
+      - lwr_6_joint
 
 ## OTHER CUSTOM CONTROLLERS LEFT HERE AS EXAMPLES
   gravity_compensation_controller:
@@ -40,6 +40,22 @@ lwr:
     tip_name: lwr_7_link
     stiffness_gains: 300
     damping_gains: .7
+
+  #   Joint Impedance Controllers
+  #joint_impedance_controller:
+  #  type: effort_controllers/JointTrajectoryController
+  #  root_name: lwr_base_link
+  #  tip_name: lwr_7_link
+  #  stiffness_gains: 300
+  #  damping_gains: .7
+  #joints: 
+  #    - lwr_0_joint
+  #    - lwr_1_joint
+  #    - lwr_2_joint
+  #    - lwr_3_joint
+  #   - lwr_4_joint
+  #    - lwr_5_joint
+  #    - lwr_6_joint
 
   # Inverse Dynamics Controllers
   inverse_dynamics_controller:

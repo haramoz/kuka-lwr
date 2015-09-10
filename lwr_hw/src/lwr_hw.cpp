@@ -85,7 +85,8 @@ namespace lwr_hw
     }
 
     current_strategy_ = JOINT_POSITION;
-
+    //current_strategy_ = JOINT_IMPEDANCE;
+    
     return;
   }
 
@@ -156,8 +157,13 @@ namespace lwr_hw
                                                                    joint_names_[j]+std::string("_stiffness"),
                                                                    &joint_stiffness_[j], &joint_stiffness_[j], &joint_stiffness_[j]),
                                                        &joint_stiffness_command_[j]);
+
+      /*joint_handle_stiffness = hardware_interface::JointHandle(hardware_interface::JointStateHandle(
+                                                                   joint_names_[j],
+                                                                   &joint_stiffness_[j], &joint_stiffness_[j], &joint_stiffness_[j]),
+                                                       &joint_stiffness_command_[j]);*/
       position_interface_.registerHandle(joint_handle_stiffness);
-   
+
      // velocity command handle, recall it is fake, there is no actual velocity interface
       hardware_interface::JointHandle joint_handle_velocity;
       joint_handle_velocity = hardware_interface::JointHandle(state_interface_.getHandle(joint_names_[j]),
@@ -414,6 +420,8 @@ namespace lwr_hw
     // at this point, we now that there is only one controller that ones to command joints
     ControlStrategy desired_strategy = JOINT_POSITION; // default
 
+    std::cout << "Is the doSwitch function gettign called at all??" << std::endl;
+
     // If any of the controllers in the start list works on a velocity interface, the switch can't be done.
     for ( std::list<hardware_interface::ControllerInfo>::const_iterator it = start_list.begin(); it != start_list.end(); ++it )
     {
@@ -455,7 +463,7 @@ namespace lwr_hw
     else
     {
       setControlStrategy(desired_strategy);
-      std::cout << "The ControlStrategy changed to: " << getControlStrategy() << std::endl;
+      std::cout << "The ControlStrategy changed to lwr hw cpp: " << getControlStrategy() << std::endl;
     }
   }
 
