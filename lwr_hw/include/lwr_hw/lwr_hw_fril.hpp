@@ -26,9 +26,13 @@ public:
 
   void setInitFile(std::string init_file){init_file_ = init_file; file_set_ = true;};
 
+  //flag for the first run
+  bool firstRun;
+
   // Init, read, and write, with FRI hooks
   bool init()
   {
+    std::cout << "i made it HERE...\n" << std::endl;
     if( !(file_set_) )
     {
       std::cout << "Did you forget to set the init file?" << std::endl
@@ -38,14 +42,20 @@ public:
     }
 
     // construct a low-level lwr
-    device_.reset( new FastResearchInterface( init_file_.c_str() ) );
 
-    ResultValue	=	device_->StartRobot( FRI_CONTROL_POSITION );
+    device_.reset( new FastResearchInterface( init_file_.c_str() ) );
+    std::cout << "i AM GETTING STUCK in the next step!!...\n" << FRI_CONTROL_POSITION << "fri control" << std::endl;
+    ResultValue	=	device_->StartRobot( 10 );
+
+    std::cout << "i AM GETTING STUCK HERE...\n" << std::endl;
     if (ResultValue != EOK)
     {
       std::cout << "An error occurred during starting up the robot...\n" << std::endl;
       return false;
     }
+    //for the first run setting up the variable
+    firstRun = true;
+
 
     return true;
   }
@@ -57,6 +67,21 @@ public:
 
     device_->GetMeasuredJointPositions( msrJntPos );
     device_->GetMeasuredJointTorques( msrJntTrq );
+
+    if(true == firstRun)
+    {
+      for (int j = 0; j < n_joints_; j++)
+      {
+        joint_position_[j] = (double)msrJntPos[j];
+        joint_position_command_[j] = joint_position_[j];
+        joint_effort_[j] = (double)msrJntTrq[j];
+        //joint_effort_command_[j] = joint_effort_[j];
+        joint_effort_command_[j] = 0;
+        //std::cout << "Custom init measured joint effort: " << joint_effort_command_[j] << std::endl;
+      }
+      firstRun = false;
+      std::cout << "read method inside first run"<< std::endl;
+    }
 
     for (int j = 0; j < n_joints_; j++)
     {
@@ -85,7 +110,7 @@ public:
         case JOINT_POSITION:
 
           // Ensure the robot is in this mode
-          if( (device_->GetCurrentControlScheme() == FRI_CONTROL_POSITION) )
+          if( (device_->GetCurrentControlScheme() == 10) )
           {
              float newJntPosition[n_joints_];
              for (int j = 0; j < n_joints_; j++)
@@ -102,7 +127,7 @@ public:
          case JOINT_IMPEDANCE:
 
           // Ensure the robot is in this mode
-          if( (device_->GetCurrentControlScheme() == FRI_CONTROL_JNT_IMP) )
+          if( (device_->GetCurrentControlScheme() == 30) )
           {
            float newJntPosition[n_joints_];
            float newJntStiff[n_joints_];
@@ -116,15 +141,18 @@ public:
            // 2. read gravity term from FRI and add it with opposite sign and add the URDF gravity term
            // newJntAddTorque = gravity_effort_  - device_->getF_DYN??
 
+           
             for(int j=0; j < n_joints_; j++)
             {
               newJntPosition[j] = (float)joint_position_command_[j];
               newJntAddTorque[j] = (float)joint_effort_command_[j];
               newJntStiff[j] = (float)joint_stiffness_command_[j];
               newJntDamp[j] = (float)joint_damping_command_[j];
+              std::cout << "joint :" << j << "position :" << newJntPosition[j] << "effort :" << newJntAddTorque[j] << "stiffness :" << newJntStiff[j] << "damping :" << newJntDamp[j] << std::endl;
             }
+
             device_->SetCommandedJointStiffness(newJntStiff);
-            device_->SetCommandedJointPositions(newJntPosition);
+            //device_->SetCommandedJointPositions(newJntPosition);
             device_->SetCommandedJointDamping(newJntDamp);
             device_->SetCommandedJointTorques(newJntAddTorque);
           }
@@ -157,12 +185,14 @@ public:
       {
         std::cout << "Request to switch to hardware_interface::PositionJointInterface (JOINT_POSITION)" << std::endl;
         desired_strategy = JOINT_POSITION;
+        //Cheating
+        //desired_strategy = JOINT_IMPEDANCE;
         break;
       }
       else if( it->hardware_interface.compare( std::string("hardware_interface::EffortJointInterface") ) == 0 )
       {
         std::cout << "Request to switch to hardware_interface::EffortJointInterface (JOINT_IMPEDANCE)" << std::endl;
-        desired_strategy = JOINT_IMPEDANCE;
+        desired_strategy = JOINT_IMPEDANCE; 
         break;
       }
     }
@@ -184,16 +214,17 @@ public:
       pj_limits_interface_.reset();
     }
 
+
+
     if(desired_strategy == getControlStrategy())
     {
       std::cout << "The ControlStrategy didn't changed, it is already: " << getControlStrategy() << std::endl;
-    }
-    else
-    {
       switch( desired_strategy )
       {
         case JOINT_POSITION:
-          ResultValue = device_->StartRobot( FRI_CONTROL_POSITION );
+          std::cout << "before start robot!! Apocalypse waits" << std::endl;
+          ResultValue = device_->StartRobot( 10,30);
+          std::cout << "start robot at all return???  :" << ResultValue << std::endl;
           if (ResultValue != EOK)
           {
             std::cout << "An error occurred during starting the robot, couldn't switch to JOINT_POSITION...\n" << std::endl;
@@ -201,7 +232,29 @@ public:
           }
           break;
          case JOINT_IMPEDANCE:
-          ResultValue = device_->StartRobot( FRI_CONTROL_JNT_IMP );
+          ResultValue = device_->StartRobot( 30,30);
+          if (ResultValue != EOK)
+          {
+            std::cout << "An error occurred during starting the robot, couldn't switch to JOINT_IMPEDANCE...\n" << std::endl;
+            return;
+          }
+          break;
+      }
+    }
+    else
+    {
+      switch( desired_strategy )
+      {
+        case JOINT_POSITION:
+          ResultValue = device_->StartRobot( 10,30);
+          if (ResultValue != EOK)
+          {
+            std::cout << "An error occurred during starting the robot, couldn't switch to JOINT_POSITION...\n" << std::endl;
+            return;
+          }
+          break;
+         case JOINT_IMPEDANCE:
+          ResultValue = device_->StartRobot( 30,30);
           if (ResultValue != EOK)
           {
             std::cout << "An error occurred during starting the robot, couldn't switch to JOINT_IMPEDANCE...\n" << std::endl;
