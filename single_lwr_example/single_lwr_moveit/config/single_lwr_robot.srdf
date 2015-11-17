@@ -47,6 +47,69 @@
         <joint name="lwr_5_joint" value="-0.4746" />
         <joint name="lwr_6_joint" value="0" />
     </group_state>
+    <group_state name="tune_j1" group="full_lwr">
+        <joint name="lwr_0_joint" value="1.6" />
+        <joint name="lwr_1_joint" value="0.8197" />
+        <joint name="lwr_2_joint" value="0" />
+        <joint name="lwr_3_joint" value="-1.2511" />
+        <joint name="lwr_4_joint" value="0" />
+        <joint name="lwr_5_joint" value="-0.4746" />
+        <joint name="lwr_6_joint" value="0" />
+    </group_state>
+    <group_state name="tune_j2" group="full_lwr">
+        <joint name="lwr_0_joint" value="0" />
+        <joint name="lwr_1_joint" value="-0.8824" />
+        <joint name="lwr_2_joint" value="0" />
+        <joint name="lwr_3_joint" value="-1.2511" />
+        <joint name="lwr_4_joint" value="0" />
+        <joint name="lwr_5_joint" value="-0.4746" />
+        <joint name="lwr_6_joint" value="0" />
+    </group_state>
+    <group_state name="tune_j3" group="full_lwr">
+        <joint name="lwr_0_joint" value="0" />
+        <joint name="lwr_1_joint" value="0.8197" />
+        <joint name="lwr_2_joint" value="-1.7336" />
+        <joint name="lwr_3_joint" value="-1.2511" />
+        <joint name="lwr_4_joint" value="0" />
+        <joint name="lwr_5_joint" value="-0.4746" />
+        <joint name="lwr_6_joint" value="0" />
+    </group_state>
+    <group_state name="tune_j4" group="full_lwr">
+        <joint name="lwr_0_joint" value="0" />
+        <joint name="lwr_1_joint" value="0.8197" />
+        <joint name="lwr_2_joint" value="0" />
+        <joint name="lwr_3_joint" value="0.2825" />
+        <joint name="lwr_4_joint" value="0" />
+        <joint name="lwr_5_joint" value="-0.4746" />
+        <joint name="lwr_6_joint" value="0" />
+    </group_state>
+    <group_state name="tune_j5" group="full_lwr">
+        <joint name="lwr_0_joint" value="0" />
+        <joint name="lwr_1_joint" value="0.8197" />
+        <joint name="lwr_2_joint" value="0" />
+        <joint name="lwr_3_joint" value="-1.2511" />
+        <joint name="lwr_4_joint" value="-1.4002" />
+        <joint name="lwr_5_joint" value="-0.47467" />
+        <joint name="lwr_6_joint" value="0" />
+    </group_state>
+    <group_state name="tune_j6" group="full_lwr">
+        <joint name="lwr_0_joint" value="0" />
+        <joint name="lwr_1_joint" value="0.8197" />
+        <joint name="lwr_2_joint" value="0" />
+        <joint name="lwr_3_joint" value="-1.2511" />
+        <joint name="lwr_4_joint" value="0" />
+        <joint name="lwr_5_joint" value="1.2707" />
+        <joint name="lwr_6_joint" value="0" />
+    </group_state>
+    <group_state name="tune_j7" group="full_lwr">
+        <joint name="lwr_0_joint" value="0" />
+        <joint name="lwr_1_joint" value="0.8197" />
+        <joint name="lwr_2_joint" value="0" />
+        <joint name="lwr_3_joint" value="-1.2511" />
+        <joint name="lwr_4_joint" value="0" />
+        <joint name="lwr_5_joint" value="-0.4746" />
+        <joint name="lwr_6_joint" value="-1.4002" />
+    </group_state>
     <!--PASSIVE JOINT: Purpose: this element is used to mark joints that are not actuated-->
     <passive_joint name="lwr_6_joint_stiffness" />
     <passive_joint name="lwr_5_joint_stiffness" />

@@ -16,7 +16,7 @@ lwr:
       - lwr_5_joint
       - lwr_6_joint
 
-  stiffness_trajectory_controller:
+  komisch_fkie_controller:
     type: position_controllers/JointTrajectoryController
     joints:
       - lwr_0_joint

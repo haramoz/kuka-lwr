@@ -22,6 +22,6 @@
 	<!-- init file /-->
 	<param name="file" value="$(arg file_with_path)"/>
 	<!-- the real hardware interface /-->
-	<!-- node required="true" name="lwr_hw" pkg="lwr_hw" type="lwr_hw_fril_node" respawn="false" output="screen"/-->
+	<!--<node required="true" name="lwr_hw" pkg="lwr_hw" type="lwr_hw_fril_node" respawn="false" output="screen"/>-->
 
 </launch>

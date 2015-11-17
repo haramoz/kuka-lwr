@@ -136,18 +136,11 @@ public:
 
       case JOINT_EFFORT:
             // will hard code the calculated values and test if the theory is correct that the initialization problem is causing the interpolation error
-            joint_effort_command_[0] = 0;
-            joint_effort_command_[1] = -12.10211;
-            joint_effort_command_[2] = 0.77646;
-            joint_effort_command_[3] = 9.200;
-            joint_effort_command_[4] = -0.01278024;
-            joint_effort_command_[5] = 0.02101575;
-            joint_effort_command_[6] = 0;
             for(int j=0; j < n_joints_; j++)
             {
                 newJntPosition[j] = joint_position_command_[j];
                 newJntAddTorque[j] = joint_effort_command_[j];
-                std::cout << "inside joint effort lwr hw cpp " << joint_effort_command_[j] << j << std::endl;
+                //std::cout << "inside joint effort lwr hw cpp " << joint_effort_command_[j] << j << std::endl;
 
             }        
             device_->doJntImpedanceControl(newJntPosition, NULL, NULL, NULL, false);
@@ -183,6 +176,7 @@ public:
       {
         //std::cout << "Request to switch to hardware_interface::PositionJointInterface (JOINT_POSITION)" << std::endl;
         //desired_strategy = JOINT_POSITION;
+        //Cheating
         desired_strategy = JOINT_EFFORT;
         break;
       }

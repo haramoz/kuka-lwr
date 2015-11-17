@@ -80,8 +80,8 @@ namespace lwr_hw
       joint_position_command_[j] = 0.0;
       joint_velocity_command_[j] = 0.0;
       joint_effort_command_[j] = 0.0;
-      joint_stiffness_command_[j] = 2500.0;
-      joint_damping_command_[j] = 0.0;
+      joint_stiffness_command_[j] = 500;
+      joint_damping_command_[j] = 0.01;
     }
 
     current_strategy_ = JOINT_POSITION;
