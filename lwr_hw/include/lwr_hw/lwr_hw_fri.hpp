@@ -76,11 +76,8 @@ public:
       {
         joint_position_[j] = device_->getMsrMsrJntPosition()[j];
         joint_position_command_[j] = joint_position_[j];
-        //joint_effort_command_[j] = device_->getMsrJntTrq()[j];
-        //std::cout << "Custom init measured joint effort: " << joint_effort_command_[j] << std::endl;
       }
       firstRun = false;
-      std::cout << "read method inside first run"<< std::endl;
     }
 
     for (int j = 0; j < n_joints_; j++)
@@ -92,16 +89,13 @@ public:
       joint_velocity_[j] = filters::exponentialSmoothing((joint_position_[j]-joint_position_prev_[j])/period.toSec(), joint_velocity_[j], 0.2);
       joint_stiffness_[j] = joint_stiffness_command_[j];
 
-      //std::cout << "measured joint position: " << joint_position_[j] << std::endl;
     }
-    //std::cout << "Inside read method lwr_hw_fri.hpp: " << std::endl;
     return;
   }
 
   void write(ros::Time time, ros::Duration period)
   {
     enforceLimits(period);
-    std::cerr<<"Inside the write fuction of frinode hpp ... "<< getControlStrategy() <<std::endl;
 
     float newJntPosition[n_joints_];
     float newJntStiff[n_joints_];
@@ -114,10 +108,8 @@ public:
         for (int j = 0; j < n_joints_; j++)
         {
           newJntPosition[j] = joint_position_command_[j];
-          //std::cout << "New joint position command: " << joint_position_command_[j] << std::endl;
         }
           device_->doPositionControl(newJntPosition, false);
-          //device_->doJntImpedanceControl(newJntPosition, NULL, NULL, NULL, false);
         break;
 
       case CARTESIAN_IMPEDANCE:
@@ -140,7 +132,6 @@ public:
             {
                 newJntPosition[j] = joint_position_command_[j];
                 newJntAddTorque[j] = joint_effort_command_[j];
-                //std::cout << "inside joint effort lwr hw cpp " << joint_effort_command_[j] << j << std::endl;
 
             }        
             device_->doJntImpedanceControl(newJntPosition, NULL, NULL, NULL, false);
@@ -160,7 +151,6 @@ public:
         device_->doJntImpedanceControl(device_->getMsrMsrJntPosition(), NULL, NULL, NULL, false);
         break;
     }
-    std::cout << "Inside write method lwr_hw_fri.hpp: " << std::endl;
     return;
   }
 
@@ -176,13 +166,12 @@ public:
       {
         //std::cout << "Request to switch to hardware_interface::PositionJointInterface (JOINT_POSITION)" << std::endl;
         //desired_strategy = JOINT_POSITION;
-        //Cheating
+        //Compliance control strategy
         desired_strategy = JOINT_EFFORT;
         break;
       }
       else if( it->hardware_interface.compare( std::string("hardware_interface::EffortJointInterface") ) == 0 )
       {
-        //std::cout << "Request to switch to hardware_interface::EffortJointInterface (JOINT_EFFORT)" << std::endl;
         desired_strategy = JOINT_EFFORT;
         break;
       }
@@ -255,28 +244,17 @@ private:
 
   void startFRI()
   {
-    // wait until FRI enters in command mode
-    //std::cout << "Waiting for good communication quality..." << std::endl;
-    //while( device_->getQuality() != FRI_QUALITY_OK ){
-        //std::cout << "Current communication quality..." << device_->getQuality() <<std::endl;
-    //};
+
     device_->setToKRLInt(1, 1);
 
-    //std::cout << "Checking the access..." << device_->getFrmKRLInt(1) << std::endl;
-
-    // std::cout << "Waiting for command mode..." << std::endl;
     while ( device_->getFrmKRLInt(1) == 0)
     {
-       std::cout << "device_->getState(): " << device_->getState() << std::endl;
-       std::cout << "Current communication quality..." << device_->getQuality() <<std::endl;
        device_->setToKRLInt(1, 1);
        usleep(1000000);
     }
-    std::cout << "After cmd mode device_->getState(): STARTFRI" << device_->getState() << std::endl;
-    //std::cout << "Current communication quality... STARTFRI" << device_->getQuality() <<std::endl;
     while(device_->getQuality() < 3)
     {
-       std::cout << "Current communication quality... STARTFRI" << device_->getQuality() <<std::endl;
+       std::cout << "Current communication quality...: " << device_->getQuality()<<" (3 desired)" <<std::endl;
     }
     return;
   }
@@ -286,10 +264,7 @@ private:
   {
     // wait until FRI enters in command mode
     device_->setToKRLInt(1, 0);
-    //std::cout << "Waiting for monitor mode..." << std::endl;
     while ( device_->getFrmKRLInt(1) != 0 ){
-      std::cout << "device_->getState(): STOPFRI" << device_->getState() << std::endl;
-      std::cout << "Waiting for monitor mode... STOPFRI" << std::endl;
       device_->setToKRLInt(1, 0);
       usleep(1000000);
     }

@@ -420,8 +420,6 @@ namespace lwr_hw
     // at this point, we now that there is only one controller that ones to command joints
     ControlStrategy desired_strategy = JOINT_POSITION; // default
 
-    std::cout << "Is the doSwitch function gettign called at all??" << std::endl;
-
     // If any of the controllers in the start list works on a velocity interface, the switch can't be done.
     for ( std::list<hardware_interface::ControllerInfo>::const_iterator it = start_list.begin(); it != start_list.end(); ++it )
     {

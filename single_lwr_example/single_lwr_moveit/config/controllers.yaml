@@ -12,7 +12,7 @@ controller_list:
       - lwr_5_joint
       - lwr_6_joint
 
-  - name: /lwr/komisch_fkie_controller
+  - name: /lwr/compliance_fkie_controller
     action_ns: follow_joint_trajectory
     type: FollowJointTrajectory
     default: true

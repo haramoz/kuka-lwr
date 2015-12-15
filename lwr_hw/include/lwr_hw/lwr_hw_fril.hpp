@@ -185,8 +185,6 @@ public:
       {
         std::cout << "Request to switch to hardware_interface::PositionJointInterface (JOINT_POSITION)" << std::endl;
         desired_strategy = JOINT_POSITION;
-        //Cheating
-        //desired_strategy = JOINT_IMPEDANCE;
         break;
       }
       else if( it->hardware_interface.compare( std::string("hardware_interface::EffortJointInterface") ) == 0 )

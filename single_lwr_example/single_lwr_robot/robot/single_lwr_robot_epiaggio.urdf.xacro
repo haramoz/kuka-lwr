@@ -3,12 +3,6 @@
 
 	<!-- Include all models -->
 	<xacro:include filename="$(find lwr_description)/model/kuka_lwr.urdf.xacro"/>
-	
-	<!-- adapter -->
-  	<xacro:include filename="$(find kuka_lbr4_fkie)/urdf/adapter/adapter.urdf.xacro" />
-
-  	<!-- sdh -->
-  	<xacro:include filename="$(find kuka_lbr4_fkie)/urdf/sdh/sdh.urdf.xacro" />
 
 	<!-- and assemble your robot -->
 	<link name="box">
@@ -42,15 +36,5 @@
 	<xacro:kuka_lwr parent="box" name="lwr">
 		<origin xyz="0 0 1" rpy="0 0 0"/>
 	</xacro:kuka_lwr>
-
-	<!-- adapter -->
-	<xacro:adapter name="adapter" parent="lwr_7_link">
-		<origin xyz="0 0 0.02" rpy="0 0 0" />
-	</xacro:adapter>
-
-	<!-- sdh -->
-	<xacro:sdh name="sdh" parent="fws_link">
-		<origin xyz="0 0 0.005" rpy="0 0 0" />
-	</xacro:sdh>
 
 </robot>

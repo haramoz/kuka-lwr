@@ -42,7 +42,7 @@ catkin_package(
     gazebo_ros
     std_msgs
   INCLUDE_DIRS include
-  LIBRARIES ${PROJECT_NAME} lwr_hw_gazebo_plugin friremote frilremote
+  LIBRARIES ${PROJECT_NAME} lwr_hw_gazebo_plugin friremote fril
   DEPENDS gazebo
 )
 

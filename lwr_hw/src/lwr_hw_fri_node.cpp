@@ -150,9 +150,7 @@ int main( int argc, char** argv )
     }    
 
     // update the controllers
-    std::cerr<<"before Update function inside the frinode cpp is called ..."<<std::endl;
     manager.update(now, period, resetControllers);
-    std::cerr<<"After Update function inside the frinode cpp is called ..."<<std::endl;
 
     // write the command to the lwr
     lwr_robot.write(now, period);
